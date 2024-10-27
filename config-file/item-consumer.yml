@@ -1,0 +1,17 @@
+server:
+    port: 8082
+spring:
+    application:
+        name: item-consumer
+    mvc:
+        static-path-pattern: /static/**
+    web:
+        resources:
+            static-locations: file:D:\img\img,file:D:\img\banner
+eureka:
+    client:
+        service-url:
+          defaultZone: http://localhost:7776/eureka
+feign:
+    circuitbreaker:
+        enabled: false
