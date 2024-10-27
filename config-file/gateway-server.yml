@@ -1,0 +1,30 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7776/eureka
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: item-consumer #ID 保持唯一
+          uri: lb://item-consumer #需要代理映射的应用名称，命名格式lb://应用名
+          predicates:
+            - Path=/item/api/** #映射的路径规则，以api开头的请求都会转发到uri指定的应用去处理
+          filters:
+            - StripPrefix=2 #转发请求的时候需要删除的信息。1代表去除第一个参数
+        - id: user-consumer #ID 保持唯一
+          uri: lb://user-consumer #需要代理映射的应用名称，命名格式lb://应用名
+          predicates:
+            - Path=/user/api/** #映射的路径规则，以api开头的请求都会转发到uri指定的应用去处理
+          filters:
+            - StripPrefix=2 #转发请求的时候需要删除的信息。1代表去除第一个参数  
+        - id: base-consumer #ID 保持唯一
+          uri: lb://base-consumer #需要代理映射的应用名称，命名格式lb://应用名
+          predicates:
+            - Path=/base/api/** #映射的路径规则，以api开头的请求都会转发到uri指定的应用去处理
+          filters:
+            - StripPrefix=2 #转发请求的时候需要删除的信息。1代表去除第一个参数                       
+  application:
+    name: gateway-server
+server:
+  port: 7600
